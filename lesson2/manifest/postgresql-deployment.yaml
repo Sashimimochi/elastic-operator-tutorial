@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:14.13
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret  # ここでSecretを参照
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret  # ここでSecretを参照
+              key: POSTGRES_ROOT_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: db-config
+        ports:
+        - containerPort: 5432

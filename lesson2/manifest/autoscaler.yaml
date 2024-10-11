@@ -1,0 +1,18 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: python-web-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: python-web-app  # ここでスケール対象のDeploymentを指定
+  minReplicas: 2       # 最小Pod数
+  maxReplicas: 10      # 最大Pod数
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu        # CPU使用率に基づいてスケール
+      target:
+        type: Utilization
+        averageUtilization: 50  # 50%のCPU使用率を目標にスケーリング

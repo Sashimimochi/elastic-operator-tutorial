@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-web-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-web-app
+  template:
+    metadata:
+      labels:
+        app: python-web-app
+    spec:
+      serviceAccountName: my-app-sa
+      containers:
+      - name: python-web-app
+        image: python-web-app:1.2
+        resources:
+          requests:
+            cpu: "50m"  # CPUリクエストを追加
+            memory: "64Mi"
+          limits:
+            cpu: "100m"  # CPUリミットを追加
+            memory: "128Mi"
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: POSTGRES_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: db-config
+        ports:
+        - containerPort: 5000
