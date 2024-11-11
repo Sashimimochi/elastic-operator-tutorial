@@ -1,0 +1,28 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: my-kibana
+  namespace: elastic-system
+spec:
+  version: 8.15.3
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  count: 1
+  elasticsearchRef:
+    name: quickstart
+  podTemplate:
+    spec:
+      containers:
+      - name: kibana
+        resources:
+          limits:
+            memory: 1Gi
+            cpu: 1
+          requests:
+            memory: 250Mi
+            cpu: 500m
+        env:
+          - name: NODE_OPTIONS
+            value: "--max-old-space-size=2048"

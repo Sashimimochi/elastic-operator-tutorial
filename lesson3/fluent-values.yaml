@@ -1,0 +1,14 @@
+# Fluentdのボリューム設定
+volumes:
+  - name: podlog
+    hostPath:
+      path: /var/log/pods
+  - name: hostlogs
+    hostPath:
+      path: /var/logs
+
+volumeMounts:
+  - name: podlog
+    mountPath: /var/log/pods
+  - name: hostlogs
+    mountPath: /var/logs
