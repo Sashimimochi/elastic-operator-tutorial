@@ -42,7 +42,7 @@ apply:
 	kubectl wait --namespace $(ELASTIC_NAMESPACE) \
   --for=condition=ready \
 	pod/quickstart-es-default-0 \
-  --timeout=600s
+  --timeout=2400s
 	helm install elastic-exporter prometheus-community/prometheus-elasticsearch-exporter -f elastic-exporter-values.yaml -n $(ELASTIC_NAMESPACE)
 
 delete:
@@ -56,6 +56,7 @@ down:
 	kind delete cluster
 
 health: password healthcheck
+resetpassword: password setpassword
 run: password add-index get-index
 
 password:
@@ -64,6 +65,9 @@ password:
 
 healthcheck:
 	curl -u "elastic:$(PASSWORD)" -k "$(ELASTICSEARC_ENDPOINT)/_cluster/health?pretty"
+
+setpassword:
+	kubectl create secret generic quickstart-canary-es-elastic-user -n $(ELASTIC_NAMESPACE) --from-literal=elastic=$(PASSWORD) --dry-run=client -o yaml | kubectl apply -f -
 
 create-index:
 	curl -u "elastic:$(PASSWORD)" -X PUT -k "$(ELASTICSEARC_ENDPOINT)/products?pretty"
@@ -91,5 +95,6 @@ up:
 	@make operator
 	@make monitoring
 	@make apply
+	@make resetpassword
 	@make health
 	@make run

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-external
+  namespace: elastic-system  # Elastic Operatorがインストールされたnamespace
+spec:
+  type: LoadBalancer
+  selector:
+    elasticsearch.k8s.elastic.co/cluster-name: quickstart
+  ports:
+    - port: 9200
+      targetPort: 9200
+      protocol: TCP

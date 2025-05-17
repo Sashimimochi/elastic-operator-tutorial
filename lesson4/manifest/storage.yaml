@@ -1,0 +1,12 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: managed-standard-ssd
+provisioner: disk.csi.azure.com
+parameters:
+  skuname: StandardSSD_LRS
+  kind: Managed              # オプション: マネージドディスクの種類
+  cachingMode: None          # オプション: キャッシュ無効化
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer

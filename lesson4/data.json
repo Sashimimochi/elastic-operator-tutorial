@@ -1,0 +1,8 @@
+{ "index": { "_index": "products", "_id": 1 } }
+{ "product_id": 1, "name": "Elasticsearch", "category": "Search Engine", "price": 0, "in_stock": true, "release_date": "2010-02-08", "description": "A distributed, RESTful search and analytics engine." }
+{ "index": { "_index": "products", "_id": 2 } }
+{ "product_id": 2, "name": "Kibana", "category": "Data Visualization", "price": 0, "in_stock": true, "release_date": "2013-09-10", "description": "A data visualization and exploration tool built on top of Elasticsearch." }
+{ "index": { "_index": "products", "_id": 3 } }
+{ "product_id": 3, "name": "Logstash", "category": "Log Management", "price": 0, "in_stock": true, "release_date": "2013-06-14", "description": "A server-side data processing pipeline that ingests, transforms, and sends data to Elasticsearch." }
+{ "index": { "_index": "products", "_id": 4 } }
+{ "product_id": 4, "name": "Beats", "category": "Data Shippers", "price": 0, "in_stock": true, "release_date": "2015-11-16", "description": "A platform for lightweight shippers that send data from edge machines to Elasticsearch." }
